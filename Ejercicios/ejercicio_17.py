@@ -1,4 +1,1 @@
-#si bueno
-
-#entonces asi ok
-
+print('Bueno mejor modificare esto jaja')
