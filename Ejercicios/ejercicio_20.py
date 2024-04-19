@@ -29,7 +29,6 @@ class Customers:
 
         self._generate_token()
 
-
     def show_information(self):
         print(f'''
         Name: {self._name}
@@ -41,7 +40,6 @@ class Customers:
 
     def get_token(self):
         return self._token
-
 
 class Transactions:
     def _verification_token(self, token):

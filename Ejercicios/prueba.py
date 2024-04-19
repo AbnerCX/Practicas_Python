@@ -1,8 +1,16 @@
-class MiClase:
-    def __init__(self):
-        self.__nombre = 'Abner'
+import logging
+import sys
+import traceback
 
+logging.basicConfig(
+    format="[%(asctime)s.%(msecs)03d] [%(name)s] [%(levelname)s] [%(funcName)s:%(lineno)d] [%(message)s]",
+    level=logging.INFO,
+    datefmt="%Y-%m-%d %H:%M:%S",
+)
+logger = logging.getLogger(__name__)
 
-objeto = MiClase()
+print('Hola mundo')
 
-print(objeto.__nombre)
+lista = ['hoola', 'amigos', 'como ', 'estan']
+
+logger.info(lista)
