@@ -1,4 +1,14 @@
+import logging
 import uuid
+
+logging.basicConfig(
+    format="[%(asctime)s.%(msecs)03d] [%(name)s] [%(levelname)s] [%(funcName)s:%(lineno)d] [%(message)s]",
+    level=logging.INFO,
+    datefmt="%Y-%m-%d %H:%M:%S",
+)
+
+logger = logging.getLogger(__name__)
+
 
 class Customers:
     def __init__(self):
@@ -7,6 +17,7 @@ class Customers:
         self._address = None
         self._email = None
         self._token = None
+
     def _generate_token(self):
         self._token = uuid.uuid4().hex
 
@@ -41,7 +52,12 @@ class Customers:
     def get_token(self):
         return self._token
 
+
 class Transactions:
+
+    def __init__(self, balance):
+        self._balance = balance
+
     def _verification_token(self, token):
         verification = token.get_token()
         if verification is not None:
@@ -49,11 +65,24 @@ class Transactions:
         else:
             print('Please, create account')
 
+    def _transaction(self, balance):
+        try:
+            option = int(input('Do you want to make a deposit?'))
+            print('1- Yes')
+            print('2- Nope')
+            if option == 1:
+                amount = int(input('How much amount do you want to deposit?'))
+                balance += amount
+                balance = self._balance
+        except ValueError:
+            logger.info('Error, use a correct option')
 
-prueba = Customers()
-prueba._create_account()
 
-print(f'El token es: {prueba.get_token()}')
+if __name__ == "__main__":
+    prueba = Customers()
+    prueba._create_account()
 
-tokensito = Transactions()
-tokensito._verification_token(prueba)
+    logger.info(f'El token es: {prueba.get_token()}')
+
+    tokensito = Transactions()
+    tokensito._verification_token(prueba)
