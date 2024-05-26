@@ -17,6 +17,7 @@ class Customers:
         self._address = None
         self._email = None
         self._token = None
+        self._balance = 0
 
     def _generate_token(self):
         self._token = uuid.uuid4().hex
@@ -40,6 +41,37 @@ class Customers:
 
         self._generate_token()
 
+    def _transaction(self):
+        try:
+            print('Do you want to make a deposit?')
+            print('1- Yes')
+            print('2- Nope')
+            option = int(input('Choose an option: '))
+            if option == 1:
+                amount = int(input('How much amount do you want to deposit? '))
+                self._balance += amount
+            else:
+                print('Thanks')
+        except ValueError:
+            logger.warn('Error, use a correct option')
+
+    def _whithdrawal_of_money(self):
+        try:
+            print('Do you want to make a whithdrawal? ')
+            print('1- Yes')
+            print('2- Nope')
+            option = int(input('Choose an option: '))
+            if option == 1:
+                amount = int(input('How much amount do you want to whithdrawal? '))
+                if amount > self._balance:
+                    print('You dont have enough money')
+                else:
+                    self._balance -= amount
+            else:
+                print('Thanks')
+        except ValueError:
+            logger.warn('Error, use a correct option')
+
     def show_information(self):
         print(f'''
         Name: {self._name}
@@ -49,14 +81,14 @@ class Customers:
         Token: {self._token}
         ''')
 
+    def show_cash(self):
+        print(f'The money in your account is: {self._balance}')
+
     def get_token(self):
         return self._token
 
 
 class Transactions:
-
-    def __init__(self, balance):
-        self._balance = balance
 
     def _verification_token(self, token):
         verification = token.get_token()
@@ -65,24 +97,19 @@ class Transactions:
         else:
             print('Please, create account')
 
-    def _transaction(self, balance):
-        try:
-            option = int(input('Do you want to make a deposit?'))
-            print('1- Yes')
-            print('2- Nope')
-            if option == 1:
-                amount = int(input('How much amount do you want to deposit?'))
-                balance += amount
-                balance = self._balance
-        except ValueError:
-            logger.info('Error, use a correct option')
 
+if __name__=="__main__":
 
-if __name__ == "__main__":
     prueba = Customers()
     prueba._create_account()
 
-    logger.info(f'El token es: {prueba.get_token()}')
-
     tokensito = Transactions()
     tokensito._verification_token(prueba)
+
+    prueba.show_information()
+    prueba._transaction()
+    prueba.show_cash()
+    prueba._whithdrawal_of_money()
+    prueba.show_cash()
+
+    logger.info(f'El token es: {prueba.geejhert_token()}')
