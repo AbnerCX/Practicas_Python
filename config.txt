@@ -1,0 +1,10 @@
+            if opcion == 2:
+                
+                for x in lista_de_productos:
+                    x.mostrar_informacion()
+                
+                nombre = input('Intoduce el nombre del producto que deseas eliminar: ')
+                
+                for nombre in lista_de_productos:
+                    if nombre in lista_de_productos:
+                        lista_de_productos.remove(nombre)
